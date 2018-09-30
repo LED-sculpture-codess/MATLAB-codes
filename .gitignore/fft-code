@@ -1,0 +1,30 @@
+clear;
+file_name = '10kHz_44100Hz_16bit_05sec.wav';
+%y is the audio data in time domain
+%Fs is the sampling frequency,1/time between two samples
+[y,Fs] = audioread(file_name);
+%samp_period time period at which we are samping
+len = length(y);
+samp_period = 0.05;
+samp_freq =1/samp_period;
+step = samp_period*Fs;
+clear y Fs
+klow=1;
+for kup = step:step:len
+    clf;
+    sample = [klow, kup];
+    klow = kup;
+    [y,Fs] = audioread(file_name,sample);
+    Y = fft(y);
+    Y = abs(Y);
+    Y = fftshift(Y);
+    l = length(Y);
+    %Y = Y(1:round(l/2)+1);  %creates a one sided fft graph
+    %f is frequencies obtained in fft,length() finds the length of the vector
+    f = linspace(-(l/2),(l/2)-1,l)*Fs/2/1000;
+    f = f';
+    plot(f,Y);
+    %ylim([-1 1]);
+    pause on;
+    pause(0.001);
+end
