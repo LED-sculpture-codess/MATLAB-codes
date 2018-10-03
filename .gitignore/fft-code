@@ -21,10 +21,8 @@ for kup = step:step:len
     l = length(Y);
     %Y = Y(1:round(l/2)+1);  %creates a one sided fft graph
     %f is frequencies obtained in fft,length() finds the length of the vector
-    f = linspace(-(l/2),(l/2)-1,l)*Fs/2/1000;
-    f = f';
-    plot(f,Y);
-    %ylim([-1 1]);
+    f = linspace(-round(l/2),1,round(l/2)+1)*Fs/2;
+    plot(f',Y);
     pause on;
     pause(0.001);
 end
