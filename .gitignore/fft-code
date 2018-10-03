@@ -1,5 +1,6 @@
+%plots  one sided frequency graph
 clear;
-file_name = '10kHz_44100Hz_16bit_05sec.wav';
+file_name = '100Hz_44100Hz_16bit_05sec.wav';
 %y is the audio data in time domain
 %Fs is the sampling frequency,1/time between two samples
 [y,Fs] = audioread(file_name);
@@ -17,12 +18,11 @@ for kup = step:step:len
     [y,Fs] = audioread(file_name,sample);
     Y = fft(y);
     Y = abs(Y);
-    Y = fftshift(Y);
     l = length(Y);
-    %Y = Y(1:round(l/2)+1);  %creates a one sided fft graph
-    %f is frequencies obtained in fft,length() finds the length of the vector
-    f = linspace(-round(l/2),1,round(l/2)+1)*Fs/2;
+    Y = Y(1:(round(l/2)+1)); 
+    %f is frequencies obtained in fft
+    f = linspace(0,1,round(l/2)+1)*Fs/2;
     plot(f',Y);
     pause on;
-    pause(0.001);
+    pause(0.001); 
 end
