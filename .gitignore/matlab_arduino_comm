@@ -1,0 +1,8 @@
+a = arduino('/dev/ttyACM0','uno');
+for k = [1:10]
+    writeDigitalPin(a,'D11',1);
+    pause(0.5);
+    writeDigitalPin(a,'D11',0);
+    pause(0.5);
+end
+clear
