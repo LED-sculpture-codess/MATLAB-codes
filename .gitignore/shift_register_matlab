@@ -1,0 +1,18 @@
+clear;
+a = arduino('/dev/ttyACM0','uno');
+clk_pin = 'D12';
+latch_pin = 'D11';
+data_pin = 'D8';
+data = [1 0 1 0 1 0 1 0];
+writeDigitalPin(a,latch_pin,0);
+for k = [1:8]
+    sift(data(k),clk_pin,data_pin,a)
+end
+writeDigitalPin(a,latch_pin,1);
+
+function [] = sift(data,clk_pin,data_pin,a)
+writeDigitalPin(a,clk_pin,0);
+writeDigitalPin(a,data_pin,data);
+writeDigitalPin(a,clk_pin,1);
+end
+
