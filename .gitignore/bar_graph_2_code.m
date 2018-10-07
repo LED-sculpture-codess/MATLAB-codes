@@ -11,7 +11,8 @@ samp_freq =1/samp_period;
 step = samp_period*Fs;
 clear y Fs
 klow=1;
-net = [];
+y_index = 1;
+net = zeros([(len/step) 8]);
 for kup = step:step:len
     clf; %clears the frame
     sample = [klow, kup];
@@ -23,16 +24,17 @@ for kup = step:step:len
     l = length(Y);
     Y = Y(1:(round(l/2)+1)); %round rounds the data to nearest integer 
     %f is frequencies obtained in fft
-    f = linspace(0,1,(l/2)+1)*Fs/2;
-    values = [];  
+    f = linspace(0,1,(l/2)+1)*Fs/2;  
+    x_index = 1;
     for higher = [11, 26, 51, 101, 251, 501, 1001,length(Y)]
         if higher == 11
                 lower = 1;
         end
         lower = higher;
-        values = [values , max(Y(lower:higher))];
+        net(y_index,x_index) = max(Y(lower:higher));
+        x_index = x_index + 1;
     end
-    net = [net;values];
+    y_index = y_index + 1;
 end
 glob_max = max(max(net));
 for i = [1:size(net,1)]
